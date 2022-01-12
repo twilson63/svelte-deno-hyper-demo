@@ -21,6 +21,8 @@ const STYLE_CSS = await Deno.readFile('public/style.css')
 const HELLO_JS = await Deno.readFile('public/hello.js')
 
 async function handler(req) {
+  console.log(req.url, req.method)
+
   if (GQL_ROUTE.exec(req.url)) {
     return await GraphQLHTTP({
       schema: makeExecutableSchema({ resolvers, typeDefs }),
