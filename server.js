@@ -1,4 +1,15 @@
 import { serve } from 'https://deno.land/std@0.114.0/http/server.ts'
+import { GraphQLHTTP } from 'https://deno.land/x/gql@1.1.0/mod.ts'
+import { makeExecutableSchema } from 'https://deno.land/x/graphql_tools@0.0.2/mod.ts'
+import { gql } from 'https://deno.land/x/graphql_tag@0.0.1/mod.ts'
+
+const typeDefs = gql`
+  type Query {
+    hello: String
+  }
+`
+
+const resolvers = { Query: { hello: () => `Hello World!` } }
 
 const GQL_ROUTE = new URLPattern({ pathname: '/graphql' })
 const INDEX_ROUTE = new URLPattern({ pathname: '/' })
@@ -9,9 +20,12 @@ const INDEX_HTML = await Deno.readFile('public/index.html')
 const STYLE_CSS = await Deno.readFile('public/style.css')
 const HELLO_JS = await Deno.readFile('public/hello.js')
 
-function handler(req) {
+async function handler(req) {
   if (GQL_ROUTE.exec(req.url)) {
-    return new Response(`graphql route`)
+    return await GraphQLHTTP({
+      schema: makeExecutableSchema({ resolvers, typeDefs }),
+      graphiql: true
+    })(req)
   }
 
   if (INDEX_ROUTE.exec(req.url)) {
