@@ -13,12 +13,15 @@ const resolvers = { Query: { hello: () => `Hello World!` } }
 
 const GQL_ROUTE = new URLPattern({ pathname: '/graphql' })
 const INDEX_ROUTE = new URLPattern({ pathname: '/' })
-const STYLE_ROUTE = new URLPattern({ pathname: '/style.css' })
-const HELLO_ROUTE = new URLPattern({ pathname: '/hello.js' })
+const STYLE_ROUTE = new URLPattern({ pathname: '/build/bundle.css' })
+const JS_ROUTE = new URLPattern({ pathname: '/build/bundle.js' })
+const FAVICON_ROUTE = new URLPattern({ pathname: '/favicon.png' })
 
 const INDEX_HTML = await Deno.readFile('public/index.html')
-const STYLE_CSS = await Deno.readFile('public/style.css')
-const HELLO_JS = await Deno.readFile('public/hello.js')
+const CSS = await Deno.readFile('public/build/bundle.css')
+const JS = await Deno.readFile('public/build/bundle.js')
+const FAVICON = await Deno.readFile('public/favicon.png')
+
 
 async function handler(req) {
   console.log(req.url, req.method)
@@ -40,7 +43,7 @@ async function handler(req) {
   }
 
   if (STYLE_ROUTE.exec(req.url)) {
-    return new Response(STYLE_CSS, {
+    return new Response(CSS, {
       status: 200,
       headers: {
         'Content-Type': 'text/css'
@@ -48,8 +51,17 @@ async function handler(req) {
     })
   }
 
-  if (HELLO_ROUTE.exec(req.url)) {
-    return new Response(HELLO_JS, {
+  if (FAVICON_ROUTE.exec(req.url)) {
+    return new Response(FAVICON, {
+      status: 200,
+      headers: {
+        'Content-Type': 'image/png'
+      }
+    })
+  }
+
+  if (JS_ROUTE.exec(req.url)) {
+    return new Response(JS, {
       status: 200,
       headers: {
         'Content-Type': 'text/javascript'
