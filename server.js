@@ -1,4 +1,4 @@
-import { serve } from 'https://deno.land/std@0.114.0/http/server.ts'
+import { serve, serveStatic } from 'https://deno.land/x/sift@0.4.2/mod.ts'
 import { GraphQLHTTP } from 'https://deno.land/x/gql@1.1.0/mod.ts'
 import { makeExecutableSchema } from 'https://deno.land/x/graphql_tools@0.0.2/mod.ts'
 import { gql } from 'https://deno.land/x/graphql_tag@0.0.1/mod.ts'
@@ -11,6 +11,18 @@ const typeDefs = gql`
 
 const resolvers = { Query: { hello: () => `Hello World!` } }
 
+serve({
+  '/': serveStatic('public/index.html', { baseUrl: import.meta.url }),
+  '/build/bundle.css': serveStatic('public/build/bundle.css', { baseUrl: import.meta.url }),
+  '/build/bundle.js': serveStatic('public/build/bundle.js', { baseUrl: import.meta.url }),
+  '/favicon.png': serveStatic('public/favicon.png', { baseUrl: import.meta.url }),
+  '/graphql': async (req) => await GraphQLHTTP({
+    schema: makeExecutableSchema({ resolvers, typeDefs }),
+    graphiql: true
+  })(req)
+})
+
+/*
 const GQL_ROUTE = new URLPattern({ pathname: '/graphql' })
 const INDEX_ROUTE = new URLPattern({ pathname: '/' })
 const STYLE_ROUTE = new URLPattern({ pathname: '/build/bundle.css' })
@@ -21,6 +33,7 @@ const INDEX_HTML = await Deno.readFile('public/index.html')
 const CSS = await Deno.readFile('public/build/bundle.css')
 const JS = await Deno.readFile('public/build/bundle.js')
 const FAVICON = await Deno.readFile('public/favicon.png')
+
 
 
 async function handler(req) {
@@ -77,3 +90,4 @@ async function handler(req) {
 console.log('Listening on http://localhost:8000')
 serve(handler)
 
+*/
