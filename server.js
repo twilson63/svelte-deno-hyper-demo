@@ -1,25 +1,12 @@
 import { serve, serveStatic } from 'sift'
-import { GraphQLHTTP } from 'gql'
-import { makeExecutableSchema } from 'graphql_tools'
-import { gql } from 'graphql_tag'
-
-const typeDefs = gql`
-  type Query {
-    hello: String
-  }
-`
-
-const resolvers = { Query: { hello: () => `Hello World!` } }
+import { api } from './api/mod.js'
 
 serve({
   '/': serveStatic('public/index.html', { baseUrl: import.meta.url }),
   '/build/bundle.css': serveStatic('public/build/bundle.css', { baseUrl: import.meta.url }),
   '/build/bundle.js': serveStatic('public/build/bundle.js', { baseUrl: import.meta.url }),
   '/favicon.png': serveStatic('public/favicon.png', { baseUrl: import.meta.url }),
-  '/graphql': async (req) => await GraphQLHTTP({
-    schema: makeExecutableSchema({ resolvers, typeDefs }),
-    graphiql: true
-  })(req)
+  '/graphql': api
 })
 
 /*
