@@ -1,7 +1,7 @@
-import { serve, serveStatic } from 'https://deno.land/x/sift@0.4.2/mod.ts'
-import { GraphQLHTTP } from 'https://deno.land/x/gql@1.1.0/mod.ts'
-import { makeExecutableSchema } from 'https://deno.land/x/graphql_tools@0.0.2/mod.ts'
-import { gql } from 'https://deno.land/x/graphql_tag@0.0.1/mod.ts'
+import { serve, serveStatic } from 'sift'
+import { GraphQLHTTP } from 'gql'
+import { makeExecutableSchema } from 'graphql_tools'
+import { gql } from 'graphql_tag'
 
 const typeDefs = gql`
   type Query {
