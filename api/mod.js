@@ -1,10 +1,16 @@
 import { GraphQLHTTP } from 'gql'
+import "https://deno.land/x/dotenv@v3.1.0/load.ts"
 import { makeExecutableSchema } from 'graphql_tools'
 import { gql } from 'graphql_tag'
+import { connect } from 'hyper-connect'
+import { cuid } from 'cuid'
+
+
+const hyper = connect(Deno.env.get('HYPER'))
 
 const typeDefs = gql`
   type Post {
-    id: ID!
+    _id: ID!
     title: String
     body: String
     published: Boolean
@@ -31,12 +37,18 @@ const resolvers = {
   Query: {
     hello: () => `Hello World!`,
     post(parent, args, context, info) {
-      return Promise.resolve({ id: '1', title: 'Hello', body: 'World', published: false }) //hyper.data.get(args.id)
+      return hyper.data.get(args.id)
+    },
+    async posts(parent, args, context, info) {
+      return (await hyper.data.query({
+        type: 'post'
+      })).docs
     }
   },
   Mutation: {
     createPost(parent, args, context, info) {
-      return Promise.resolve({ ok: true, id: '1' })
+      const post = { _id: `post-${cuid()}`, type: 'post', ...args }
+      return hyper.data.add(post)
     }
   }
 }

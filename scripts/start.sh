@@ -1,1 +1,1 @@
-deno run --allow-net --allow-read --allow-env --import-map=import_map.json server.js 
+deno run -A --unstable --import-map=import_map.json --no-check=remote server.js 
