@@ -1,0 +1,102 @@
+<!doctype html>
+<html>
+
+<head>
+  <title>Hyper + Deno Workshop</title>
+  <link rel="stylesheet" href="https://unpkg.com/browse/gfm.css@1.1.2/gfm.css">
+  <link href="https://unpkg.com/prismjs@v1.x/themes/prism.css" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+  <header class="px-3 px-lg:14 h-12 h-lg:20 text-gray-500 flex justify-between items-center">
+    <a href="/"><span class="ml-4 flex items-baseline gap-x-1 flex-col sm:flex-row tracking-tighter">Hyper by
+        example</span></a>
+    <div class="flex items-center gap-6">
+      <a href="https://docs.hyper.io/cloud">Docs</a>
+      <a href="https://hyper.io">Web</a>
+    </div>
+  </header>
+  <main class="max-w-screen-lg mx-auto p-4">
+    <div class="flex gap-2">
+      <p class="text-gray-500 italic">intermediate</p>
+      <div class="flex gap-2 items-center">
+        <span class="text-xs bg-gray-200 py-0.5 px-2 rounded-md">cli</span>
+        <span class="text-xs bg-gray-200 py-0.5 px-2 rounded-md">deploy</span>
+      </div>
+    </div>
+    <h1 class="mt-2 text-3xl font-bold">Getting Started</h1>
+    <div class="mt-1">
+      <p class="text-gray-500">
+        In order to get started with hyper, head to <a class="underline"
+          href="https://dashboard.hyper.io">https://dashboard.hyper.io</a>
+        and create an account. Then create a new hyper application. Then open up a terminal and create a `.env` file and
+        copy the connection-string from the hyper and add to the `.env` file.
+      </p>
+      <p class="text-gray-500 mt-5">
+        HYPER=[Connection-String]
+      </p>
+
+    </div>
+    <div class="mt-10">
+      <div class="grid grid-cols-1 sm:grid-cols-5 gap-x-6  transition duration-150 ease-in">
+        <div class="py-4 text-gray-700 select-none col-span-2">
+          import dependencies
+        </div>
+        <div class="col-span-3 relative bg-gray-100">
+          <div class="px-4 py-2 text-sm overflow-scroll sm:overflow-hidden relative highlight">
+            <pre>
+              <code class="language-typescript">
+import { connect } from 'hyper-connect'
+              </code>
+            </pre>
+          </div>
+        </div>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-5 gap-x-6  transition duration-150 ease-in">
+        <div class="py-4 text-gray-700 select-none col-span-2">
+          create hyper index
+        </div>
+        <div class="col-span-3 relative bg-gray-100">
+          <div class="px-4 py-2 text-sm overflow-scroll sm:overflow-hidden relative highlight">
+            <pre>
+              <code class="language-typescript">
+const hyper = connect(Deno.env.get('HYPER') as string)
+              </code>
+            </pre>
+          </div>
+        </div>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-5 gap-x-6  transition duration-150 ease-in">
+        <div class="py-4 text-gray-700 select-none col-span-2">
+          get all documents of type games
+        </div>
+        <div class="col-span-3 relative bg-gray-100">
+          <div class="px-4 py-2 text-sm overflow-scroll sm:overflow-hidden relative highlight">
+            <pre>
+              <code class="language-typescript">
+const games = await hyper.data.query&lt;Game&gt;({type: 'game'})
+              </code>
+            </pre>
+          </div>
+        </div>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-5 gap-x-6">
+        <div class="col-span-2 mt-8"></div>
+        <div class="col-span-3 mt-8">
+          <p class="text-gray-700">
+            Run this example locally using the Deno cli
+          </p>
+          <pre class="mt-2 bg-gray-100 p-4 overflow-x-auto text-sm select-all rounded-md">
+deno run https://examples.hyper.io/getting-started.js
+          </pre>
+        </div>
+      </div>
+    </div>
+  </main>
+  <script src="https://unpkg.com/prismjs@v1.x/components/prism-core.min.js"></script>
+  <script src="https://unpkg.com/prismjs@v1.x/plugins/autoloader/prism-autoloader.min.js"></script>
+  <script src="https://unpkg.com/browse/prismjs@1.26.0/components/prism-typescript.min.js"></script>
+</body>
+
+</html>
