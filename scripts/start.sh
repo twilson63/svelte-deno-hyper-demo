@@ -1,1 +1,1 @@
-deno run -A --unstable --import-map=import_map.json --no-check=remote server.ts 
+deno run -A --unstable --no-check=remote server.ts 

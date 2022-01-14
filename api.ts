@@ -1,9 +1,4 @@
-import { GraphQLHTTP } from 'gql'
-import { makeExecutableSchema } from 'graphql_tools'
-import { gql } from 'graphql_tag'
-import { connect } from 'hyper-connect'
-import { cuid } from 'cuid'
-import { SortOptions } from 'hyper-connect-types'
+import { GraphQLHTTP, makeExecutableSchema, gql, connect, cuid, SortOptions } from './deps.ts'
 
 const typeDefs = gql`
   type Post {

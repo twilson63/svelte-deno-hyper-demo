@@ -1,7 +1,7 @@
 import "https://deno.land/x/dotenv@v3.1.0/load.ts"
 
-import { serve, serveStatic } from 'sift'
-import { core } from './api/mod.ts'
+import { serve, serveStatic } from './deps.ts'
+import { core } from './api.ts'
 
 const api = core(Deno.env.get('HYPER') as string)
 
