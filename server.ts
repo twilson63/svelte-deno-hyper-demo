@@ -11,4 +11,3 @@ serve({
   '/build/bundle.js': serveStatic('public/build/bundle.js', { baseUrl: import.meta.url }),
   '/graphql': api
 })
-
