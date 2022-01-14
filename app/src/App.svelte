@@ -5,6 +5,7 @@
 </script>
 
 <svelte:head>
+	<title>TIL</title>
 	<link rel="stylesheet" href="https://unpkg.com/mvp.css" />
 </svelte:head>
 

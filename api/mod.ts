@@ -3,6 +3,7 @@ import { makeExecutableSchema } from 'graphql_tools'
 import { gql } from 'graphql_tag'
 import { connect } from 'hyper-connect'
 import { cuid } from 'cuid'
+import { SortOptions } from 'hyper-connect-types'
 
 const typeDefs = gql`
   type Post {
@@ -29,30 +30,40 @@ const typeDefs = gql`
   }
 `
 
-export const core = env => {
+interface InputId {
+  id: string
+}
+
+interface PartialPost {
+  title: string,
+  body: string,
+  published: boolean
+}
+
+export const core = (env : string) => {
   const hyper = connect(env)
 
   const resolvers = {
     Query: {
       hello: () => `Hello World!`,
-      post(parent, args, context, info) {
-        return hyper.data.get(args.id)
+      post(_parent : unknown, { id } : InputId) {
+        return hyper.data.get(id)
       },
-      async posts(parent, args, context, info) {
+      async posts() {
         return (await hyper.data.query({
           type: 'post'
-        })).docs
+        }, { sort: [{_id: SortOptions.DESC}]})).docs
       }
     },
     Mutation: {
-      createPost(parent, args, context, info) {
+      createPost(_parent : unknown, args : PartialPost) {
         const post = { _id: `post-${cuid()}`, type: 'post', ...args }
         return hyper.data.add(post)
       }
     }
   }
 
-  return async (req) => await GraphQLHTTP({
+  return async (req : Request) => await GraphQLHTTP({
     schema: makeExecutableSchema({ resolvers, typeDefs }),
     graphiql: true
   })(req)

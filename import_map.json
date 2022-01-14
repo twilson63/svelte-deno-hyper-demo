@@ -6,6 +6,7 @@
     "graphql_tag": "https://deno.land/x/graphql_tag@0.0.1/mod.ts",
     "hyper-connect": "https://x.nest.land/hyper-connect@0.1.9/deno/mod.ts",
     "dotenv": "https://deno.land/x/dotenv/mod.ts",
-    "cuid": "https://deno.land/x/cuid/index.js"
+    "cuid": "https://deno.land/x/cuid/index.js",
+    "hyper-connect-types": "https://x.nest.land/hyper-connect@0.1.9/deno/types.ts"
   }
 }
