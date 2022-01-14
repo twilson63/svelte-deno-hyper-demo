@@ -2,6 +2,5 @@ export { makeExecutableSchema } from 'https://deno.land/x/graphql_tools@0.0.2/mo
 export { GraphQLHTTP } from 'https://deno.land/x/gql@1.1.0/mod.ts'
 export { gql } from 'https://deno.land/x/graphql_tag@0.0.1/mod.ts'
 export { connect } from 'https://x.nest.land/hyper-connect@0.1.9/deno/mod.ts'
-export { cuid } from 'https://deno.land/x/cuid/index.js'
 export { SortOptions } from 'https://x.nest.land/hyper-connect@0.1.9/deno/types.ts'
 export { serve, serveStatic } from 'https://deno.land/x/sift@0.4.2/mod.ts'

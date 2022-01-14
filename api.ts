@@ -1,4 +1,11 @@
-import { GraphQLHTTP, makeExecutableSchema, gql, connect, cuid, SortOptions } from './deps.ts'
+import { GraphQLHTTP, makeExecutableSchema, gql, connect, SortOptions } from './deps.ts'
+
+declare global {
+  interface Crypto {
+    randomUUID: () => string;
+  }
+}
+
 
 const typeDefs = gql`
   type Post {
@@ -52,7 +59,8 @@ export const core = (env : string) => {
     },
     Mutation: {
       createPost(_parent : unknown, args : PartialPost) {
-        const post = { _id: `post-${cuid()}`, type: 'post', ...args }
+        const uuid = crypto.randomUUID()
+        const post = { _id: `post-${uuid}`, type: 'post', ...args }
         return hyper.data.add(post)
       }
     }
