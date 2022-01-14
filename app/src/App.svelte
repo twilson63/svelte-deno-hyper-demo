@@ -1,30 +1,12 @@
 <script>
-	export let name;
+	import { Route } from "tinro";
+	import Index from "./index.svelte";
+	import Post from "./post.svelte";
 </script>
 
-<main>
-	<h1>Hello {name}!</h1>
-	<p>Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn how to build Svelte apps.</p>
-</main>
+<svelte:head>
+	<link rel="stylesheet" href="https://unpkg.com/mvp.css" />
+</svelte:head>
 
-<style>
-	main {
-		text-align: center;
-		padding: 1em;
-		max-width: 240px;
-		margin: 0 auto;
-	}
-
-	h1 {
-		color: #ff3e00;
-		text-transform: uppercase;
-		font-size: 4em;
-		font-weight: 100;
-	}
-
-	@media (min-width: 640px) {
-		main {
-			max-width: none;
-		}
-	}
-</style>
+<Route path="/"><Index /></Route>
+<Route path="/new"><Post /></Route>

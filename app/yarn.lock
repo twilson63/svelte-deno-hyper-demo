@@ -619,6 +619,11 @@ terser@^5.0.0:
     source-map "~0.7.2"
     source-map-support "~0.5.20"
 
+tinro@^0.6.10:
+  version "0.6.10"
+  resolved "https://registry.yarnpkg.com/tinro/-/tinro-0.6.10.tgz#e488a46a2004836ad2f25b5a1aa1d57a9396e1c7"
+  integrity sha512-bWWiHwj3rlEaqfcltBkIbEkHOG6sECkCHxCnD/TUWHyoNEDDOfhY3sinf75HPcWnNVnreBOFJJQd3IEqEJfHGg==
+
 tinydate@^1.0.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/tinydate/-/tinydate-1.3.0.tgz#e6ca8e5a22b51bb4ea1c3a2a4fd1352dbd4c57fb"
