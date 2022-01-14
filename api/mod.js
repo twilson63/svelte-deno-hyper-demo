@@ -1,12 +1,8 @@
 import { GraphQLHTTP } from 'gql'
-import "https://deno.land/x/dotenv@v3.1.0/load.ts"
 import { makeExecutableSchema } from 'graphql_tools'
 import { gql } from 'graphql_tag'
 import { connect } from 'hyper-connect'
 import { cuid } from 'cuid'
-
-
-const hyper = connect(Deno.env.get('HYPER'))
 
 const typeDefs = gql`
   type Post {
@@ -33,27 +29,32 @@ const typeDefs = gql`
   }
 `
 
-const resolvers = {
-  Query: {
-    hello: () => `Hello World!`,
-    post(parent, args, context, info) {
-      return hyper.data.get(args.id)
+export const core = env => {
+  const hyper = connect(env)
+
+  const resolvers = {
+    Query: {
+      hello: () => `Hello World!`,
+      post(parent, args, context, info) {
+        return hyper.data.get(args.id)
+      },
+      async posts(parent, args, context, info) {
+        return (await hyper.data.query({
+          type: 'post'
+        })).docs
+      }
     },
-    async posts(parent, args, context, info) {
-      return (await hyper.data.query({
-        type: 'post'
-      })).docs
-    }
-  },
-  Mutation: {
-    createPost(parent, args, context, info) {
-      const post = { _id: `post-${cuid()}`, type: 'post', ...args }
-      return hyper.data.add(post)
+    Mutation: {
+      createPost(parent, args, context, info) {
+        const post = { _id: `post-${cuid()}`, type: 'post', ...args }
+        return hyper.data.add(post)
+      }
     }
   }
-}
 
-export const api = async (req) => await GraphQLHTTP({
-  schema: makeExecutableSchema({ resolvers, typeDefs }),
-  graphiql: true
-})(req)
+  return async (req) => await GraphQLHTTP({
+    schema: makeExecutableSchema({ resolvers, typeDefs }),
+    graphiql: true
+  })(req)
+
+} 

@@ -16,7 +16,7 @@ query {
   <h1>TIL</h1>
 </header>
 <main>
-  <section>
+  <section id="sub-heading">
     <h2>Posts</h2>
     <a href="/new"><b>New Post</b></a>
   </section>
@@ -31,3 +31,10 @@ query {
     {/each}
   {/await}
 </main>
+
+<style>
+  #sub-heading {
+    display: flex;
+    flex-direction: column;
+  }
+</style>

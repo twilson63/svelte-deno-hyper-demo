@@ -1,5 +1,9 @@
+import "https://deno.land/x/dotenv@v3.1.0/load.ts"
+
 import { serve, serveStatic } from 'sift'
-import { api } from './api/mod.js'
+import { core } from './api/mod.js'
+
+const api = core(Deno.env.get('HYPER'))
 
 serve({
   '/': serveStatic('public/index.html', { baseUrl: import.meta.url }),
