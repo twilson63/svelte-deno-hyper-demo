@@ -40,3 +40,5 @@ plain-text(markdown).
 - open two terminal windows
   - terminal one - `./scripts/start`
   - terminal two - `cd app && yarn dev`
+
+Dang UUID!
